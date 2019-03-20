@@ -1,4 +1,4 @@
-# reminder2
+# reMINDer2
 
 ## Project setup
 ```
