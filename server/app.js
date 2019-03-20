@@ -19,9 +19,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(history());
 
-// if (process.env.NODE_ENV === 'development') {
-//   app.use(morgan('dev'));
-// }
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
 
 const checkJwt = jwt({
   secret: jwks.expressJwtSecret({
@@ -37,8 +37,6 @@ const checkJwt = jwt({
 
 // This route doesn't need authentication
 app.get('/api/public', (req, res) => {
-  console.log(req.url);
-  console.log(req.headers);
   res.json({
     message: 'Hello from a public endpoint! You don\'t need to be authenticated to see this.',
   });
