@@ -8,6 +8,7 @@ const history = require('connect-history-api-fallback');
 const jwt = require('express-jwt');
 const jwtAuthz = require('express-jwt-authz');
 const jwks = require('jwks-rsa');
+const axios = require('axios');
 
 dotenv.config();
 
@@ -19,9 +20,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(history());
 
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
-}
+// if (process.env.NODE_ENV === 'development') {
+//   app.use(morgan('dev'));
+// }
 
 const checkJwt = jwt({
   secret: jwks.expressJwtSecret({
@@ -42,16 +43,28 @@ app.get('/api/public', (req, res) => {
   });
 });
 
+const getUserInfo = (req, res, next) => {
+  const { authorization } = req.headers;
+  const headers = {
+    authorization,
+  };
+  axios.get('https://dev-vxw7uzlp.auth0.com/userinfo', { headers })
+    .then((response) => {
+      res.locals.user = response.data;
+    })
+    .catch(err => console.log(err))
+    .finally(data => next(null, data));
+};
+
 // This route need authentication
-app.get('/api/private', checkJwt, (req, res) => {
+app.get('/api/private', checkJwt, getUserInfo, (req, res) => {
+  console.log(res.locals.user);
   res.json({
     message: 'Hello from a private endpoint! You need to be authenticated to see this.',
   });
 });
 
-const checkScopes = jwtAuthz(['read:messages']);
-
-app.get('/api/private-scoped', checkJwt, checkScopes, (req, res) => {
+app.get('/api/private-scoped', checkJwt, getUserInfo, (req, res) => {
   res.json({
     message: 'Hello from a private endpoint! You need to be authenticated and have a scope of read:messages to see this.',
   });

@@ -16,7 +16,7 @@
     <div class="container">
       <div class="card-columns">
 
-        <a class="card" :href="getStoryLink(story)" target="_blank" v-for="story in stories">
+        <a class="card" :href="getStoryLink(story)" target="_blank" v-bind:key="story.content.title" v-for="story in stories">
           <img class="card-img-top" :src="story.content.image" :alt="story.content.image_alt">
           <div class="card-body">
             <h5 class="card-title">{{story.content.title}}</h5>
