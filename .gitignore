@@ -21,3 +21,4 @@ yarn-error.log*
 *.sw*
 
 auth_config.js
+.env

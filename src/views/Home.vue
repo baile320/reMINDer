@@ -30,7 +30,7 @@
 
 <script>
 import axios from 'axios';
-
+import auth from '../auth';
 import TheNavBar from './TheNavBar';
 
 export default {
@@ -46,6 +46,13 @@ export default {
     axios.get('https://api.storyblok.com/v1/cdn/stories?starts_with=tp&excluding_fields=body&excluding_ids=48471,48547,60491&token=dtONJHwmxhdJOwKxyjlqAgtt').then((res) => {
       this.stories = res.data.stories;
     });
+    const headers = {
+      authorization: this.$auth.getAuthHeader().Authorization,
+    }
+    axios.get('http://127.0.0.1:8081/api/public/', { headers })
+      .then((res) => console.log(res));
+    axios.get('http://127.0.0.1:8081/api/private/', { headers })
+      .then((res) => console.log(res));
   },
   methods: {
     getStoryLink(story) {

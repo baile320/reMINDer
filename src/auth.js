@@ -6,9 +6,9 @@ import { authConfig } from '../auth_config';
 // exchange the object with your own from the setup step above.
 const webAuth = new auth0.WebAuth({
   domain: authConfig.fullDomain,
-  redirectUri: 'http://localhost:8080/callback',
+  redirectUri: authConfig.redirectUri,
   clientID: authConfig.clientId,
-  audience: `https://${authConfig.fullDomain}/api/v2/`,
+  audience: authConfig.aud,
   responseType: 'token id_token',
   scope: 'openid profile email',
 });
@@ -60,13 +60,18 @@ const auth = new Vue({
         localStorage.removeItem('expires_at');
         localStorage.removeItem('user');
         webAuth.logout({
-          returnTo: 'http://localhost:8080.com/logout', // Allowed logout URL listed in dashboard
+          returnTo: authConfig.logoutUri, // Allowed logout URL listed in dashboard
           clientID: authConfig.clientId, // Your client ID
         });
       });
     },
     isAuthenticated() {
       return new Date().getTime() < this.expiresAt;
+    },
+    getAuthHeader() {
+      return {
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+      };
     },
     handleAuthentication() {
       return new Promise((resolve, reject) => {
