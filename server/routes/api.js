@@ -20,6 +20,13 @@ mainApiRouter.get('/private-scoped',
   authConfig.getUserInfo,
   remindersControllers.privateScopedRoute);
 
-mainApiRouter.get('/reminders/:email',
-  remindersControllers.getAllReminders);
+// This route should use authorization, it should only return results if
+// getUserInfo matches the /:email req.params (we don't want other users getting your
+// private reminders)
+mainApiRouter.get('/users/:email/reminders',
+  remindersControllers.getAllRemindersForUser);
+module.exports = mainApiRouter;
+
+mainApiRouter.delete('/users/:email/reminders/:reminderId',
+  remindersControllers.deleteReminderForUser);
 module.exports = mainApiRouter;

@@ -20,7 +20,7 @@ exports.privateScopedRoute = (req, res) => {
   });
 };
 
-exports.getAllReminders = async (req, res) => {
+exports.getAllRemindersForUser = async (req, res) => {
   const query = `
   SELECT * FROM reminders AS r
   INNER JOIN users_reminders
@@ -32,9 +32,33 @@ exports.getAllReminders = async (req, res) => {
   WHERE
     u.email = '${req.params.email}';
   `;
+
   try {
     const result = await db.query(query);
     res.json(result.rows);
+  } catch (err) {
+    console.log(err.stack);
+  }
+};
+
+exports.updateReminderForUser = async (req, res) => {
+};
+
+exports.deleteReminderForUser = async (req, res) => {
+  const query = `
+  DELETE FROM users_reminders as u_r
+  USING
+    users
+      AS u,
+    reminders
+      AS r
+  WHERE u.email = '${req.params.email}'
+    AND u_r.reminders_id = '${req.params.reminderId}'
+  `;
+
+  try {
+    const result = await db.query(query);
+    res.json(result);
   } catch (err) {
     console.log(err.stack);
   }

@@ -43,3 +43,14 @@ CREATE TABLE reminders_tags (
   reminders_id SERIAL REFERENCES reminders(id),
   tags_id SERIAL REFERENCES tags(id)
 );
+
+/*
+
+Add a favorites
+id
+user_id
+reminder_id
+
+Should we have a created_by in Reminders to allow for edits?
+
+*/
