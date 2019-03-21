@@ -1,4 +1,5 @@
 const { db } = require('../../database/index');
+const { updateReminderById } = require('../../database/utils/index');
 
 // This route doesn't need authentication
 exports.publicRoute = (req, res) => {
@@ -42,6 +43,26 @@ exports.getAllRemindersForUser = async (req, res) => {
 };
 
 exports.updateReminderForUser = async (req, res) => {
+  /**
+   * this function isn't dynamic enough. It should:
+   *  - be able to handle updating tags
+   *    - add new tags if they dont exist in db already
+   *    - create the relationship in reminders_tags
+   *  - handle updating w/ fields missing or not
+   *  - handle updated the updated_at field
+   *  - not be allowed to modify the created_at field
+   *  - not be allowed to modify the id field.
+   */
+  const query = updateReminderById(req.params.reminderId, req.body);
+  const values = Object.values(req.body);
+
+  try {
+    const result = await db.query(query, values);
+    res.json(result);
+    res.sendStatus(200);
+  } catch (err) {
+    console.log(err.stack);
+  }
 };
 
 exports.deleteReminderForUser = async (req, res) => {

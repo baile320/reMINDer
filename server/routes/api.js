@@ -27,6 +27,10 @@ mainApiRouter.get('/users/:email/reminders',
   remindersControllers.getAllRemindersForUser);
 module.exports = mainApiRouter;
 
+mainApiRouter.patch('/users/:email/reminders/:reminderId',
+  remindersControllers.updateReminderForUser);
+module.exports = mainApiRouter;
+
 mainApiRouter.delete('/users/:email/reminders/:reminderId',
   remindersControllers.deleteReminderForUser);
 module.exports = mainApiRouter;
