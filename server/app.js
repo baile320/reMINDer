@@ -6,7 +6,6 @@ const cors = require('cors');
 const morgan = require('morgan');
 const history = require('connect-history-api-fallback');
 const jwt = require('express-jwt');
-const jwtAuthz = require('express-jwt-authz');
 const jwks = require('jwks-rsa');
 const axios = require('axios');
 
@@ -20,9 +19,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(history());
 
-// if (process.env.NODE_ENV === 'development') {
-//   app.use(morgan('dev'));
-// }
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
 
 const checkJwt = jwt({
   secret: jwks.expressJwtSecret({
@@ -58,7 +57,7 @@ const getUserInfo = (req, res, next) => {
 
 // This route need authentication
 app.get('/api/private', checkJwt, getUserInfo, (req, res) => {
-  console.log(res.locals.user);
+  //console.log(res.locals.user);
   res.json({
     message: 'Hello from a private endpoint! You need to be authenticated to see this.',
   });

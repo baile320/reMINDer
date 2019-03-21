@@ -4,25 +4,49 @@
     <div class="jumbotron">
       <div class="container">
         <h1 class="display-4">Hello, {{$auth.user.name}}!</h1>
-        <p class="lead">We hope you liked this tutorial and can now start building new astounding projects from this start point. If you're interested in what we're doing besides tech tutorials check out <a href="https://www.storyblok.com">@storyblok</a>.</p>
         <hr class="my-4">
-        <p>TBH, I'm sure this project of yours would look great with a landing page filled with content composed in <a href="https://www.storyblok.com">Storyblok</a> 🎉</p>
         <p class="lead">
-          <a class="btn btn-primary btn-lg mr-2" href="https://www.storyblok.com/getting-started" target="_blank" role="button">Getting Started</a>
-          <a class="btn btn-secondary btn-lg" href="https://twitter.com/home?status=Have%20a%20look%20at%20%40storyblok%20and%20their%20%40vuejs%20%2B%20%40auth0%20tutorial%3A%20https%3A//www.storyblok.com/tp/how-to-auth0-vuejs-authentication" target="_blank" role="button">Tweet it</a>
         </p>
+        <h1 class="display-5">reMINDer</h1>
+        <p class="lead">
+          A non-intrusive daily reminder app that leverages
+          spaced repetition learning techniques.
+        </p>
+        <h3 class="display-5">Add</h3>
+        <p class="lead">
+          Simply add material quotes via the web portal, and voila! You'll soon
+          be getting periodic e-mails with little gems of knowledge from yourself.
+        </p>
+        <blockquote class="blockquote">
+        <p>Blah Blah Blah</p>
+          <cite class="blockquote-footer">Some Old Dude</cite>
+        </blockquote>
+        <h3 class="display-5">Schedule</h3>
+        <p class="lead">
+            Set it and forget it! Determine how frequently you would like to
+            receive notifications, and <strong>reMINDer</strong> will handle the rest.
+        </p>
+        <p class="lead">
+            <strong>reMINDer</strong> will send you periodic e-mails sampling
+            from your quotebase which you can then read (or ignore!)
+            at your leisure.
+        </p>
+        <p class="lead">
+            We keep track of how frequently a given quote is sent, and the last time
+            it was sent, to ensure your daily reminders stay fresh and exciting.
+            Don't forget, you have to begin to forget to remember!
+        </p>
+        <h3 class="display-5">Learn</h3>
+        <p class="lead">
+            Unlike common popular spaced repetition learning apps that require you
+            to allocate time spent focused on the training, <strong>reMINDer</strong> lets
+            you sit around and take things as they come!
+          </p>
       </div>
     </div>
     <div class="container">
-      <div class="card-columns">
+      <div>
 
-        <a class="card" :href="getStoryLink(story)" target="_blank" v-bind:key="story.content.title" v-for="story in stories">
-          <img class="card-img-top" :src="story.content.image" :alt="story.content.image_alt">
-          <div class="card-body">
-            <h5 class="card-title">{{story.content.title}}</h5>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          </div>
-        </a>
       </div>
     </div>
   </div>
@@ -39,13 +63,9 @@ export default {
   },
   data() {
     return {
-      stories: [],
     };
   },
   mounted() {
-    axios.get('https://api.storyblok.com/v1/cdn/stories?starts_with=tp&excluding_fields=body&excluding_ids=48471,48547,60491&token=dtONJHwmxhdJOwKxyjlqAgtt').then((res) => {
-      this.stories = res.data.stories;
-    });
     const headers = {
       authorization: this.$auth.getAuthHeader().Authorization,
     }
@@ -55,9 +75,6 @@ export default {
       .then((res) => console.log(res));
   },
   methods: {
-    getStoryLink(story) {
-      return `https://www.storyblok.com/${story.full_slug}`;
-    },
   },
 };
 </script>
@@ -71,5 +88,10 @@ export default {
 .card {
   text-decoration: none;
   color: #000;
+}
+
+blockquote {
+  border-left: 2px solid #000;
+  padding-left: 10px;
 }
 </style>
