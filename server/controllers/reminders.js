@@ -1,3 +1,5 @@
+const { db } = require('../../database/index');
+
 // This route doesn't need authentication
 exports.publicRoute = (req, res) => {
   res.json({
@@ -16,4 +18,24 @@ exports.privateScopedRoute = (req, res) => {
   res.json({
     message: 'Hello from a private endpoint! You need to be authenticated and have a scope of read:messages to see this.',
   });
+};
+
+exports.getAllReminders = async (req, res) => {
+  const query = `
+  SELECT * FROM reminders AS r
+  INNER JOIN users_reminders
+    AS u_r
+    ON u_r.reminders_id = r.id
+  INNER JOIN users
+    AS u
+    ON u_r.users_id = u.id
+  WHERE
+    u.email = '${req.params.email}';
+  `;
+  try {
+    const result = await db.query(query);
+    res.json(result.rows);
+  } catch (err) {
+    console.log(err.stack);
+  }
 };

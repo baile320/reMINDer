@@ -43,8 +43,3 @@ CREATE TABLE reminders_tags (
   reminders_id SERIAL REFERENCES reminders(id),
   tags_id SERIAL REFERENCES tags(id)
 );
-/*
-
-
-
-*/
