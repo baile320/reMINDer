@@ -1,5 +1,5 @@
-const { db } = require('../../database/index');
 const { updateReminderById } = require('../../database/utils/index');
+const db = require('../..//database/knex');
 
 // This route doesn't need authentication
 exports.publicRoute = (req, res) => {
@@ -35,7 +35,7 @@ exports.getAllRemindersForUser = async (req, res) => {
   `;
 
   try {
-    const result = await db.query(query);
+    const result = await db.raw(query);
     res.json(result.rows);
   } catch (err) {
     console.log(err.stack);
@@ -48,16 +48,22 @@ exports.updateReminderForUser = async (req, res) => {
    *  - be able to handle updating tags
    *    - add new tags if they dont exist in db already
    *    - create the relationship in reminders_tags
-   *  - handle updating w/ fields missing or not
    *  - handle updated the updated_at field
-   *  - not be allowed to modify the created_at field
-   *  - not be allowed to modify the id field.
    */
-  const query = updateReminderById(req.params.reminderId, req.body);
-  const values = Object.values(req.body);
-
   try {
-    const result = await db.query(query, values);
+    // insert tags if there are any
+    if (req.body.tags !== undefined) {
+      const tags = req.body.tags.map(tagName => ({ tag: tagName }));
+      await db('tags').insert(tags);
+    }
+    // update reminders_tags for
+
+    // update reminders
+    const query = updateReminderById(req.params.reminderId, req.body);
+    const values = Object.values(req.body);
+
+    const result = await db.raw(query, values);
+    console.log(query);
     res.json(result);
     res.sendStatus(200);
   } catch (err) {
@@ -78,8 +84,9 @@ exports.deleteReminderForUser = async (req, res) => {
   `;
 
   try {
-    const result = await db.query(query);
-    res.json(result);
+    const result = await db.raw(query);
+    console.log(query);
+    res.json(result.rows);
   } catch (err) {
     console.log(err.stack);
   }

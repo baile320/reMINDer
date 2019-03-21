@@ -1,19 +1,26 @@
-module.exports.updateReminderById = (id, cols) => {
-  // Setup static beginning of query
+/**
+ * Builds a query like:
+ * UPDATE table SET col1 = ($1), col2 = ($2), col3 = ($3) WHERE id = 2
+ * Optionally, restricts columns updated to array of "allowed" columns
+ */
+module.exports.updateReminderById = (id, cols, allowed = []) => {
   const query = ['UPDATE reminders'];
   query.push('SET');
 
-  // Create another array storing each set command
-  // and assigning a number value for parameterized query
   const set = [];
   Object.keys(cols).forEach((key, i) => {
-    set.push(`${key} = ($${i + 1})`);
+    if (allowed.length === 0) {
+      set.push(`${key} = ($${i + 1})`);
+    } else {
+      // eslint-disable-next-line no-lonely-if
+      if (allowed.includes(key)) {
+        set.push(`${key} = ($${i + 1})`);
+      }
+    }
   });
   query.push(set.join(', '));
 
-  // Add the WHERE statement to look up by id
   query.push(`WHERE id = ${id}`);
 
-  // Return a complete query string
   return query.join(' ');
 };
