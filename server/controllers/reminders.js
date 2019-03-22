@@ -57,7 +57,6 @@ exports.updateReminderForUser = async (req, res) => {
   try {
     const result = await User.findOne({ email: req.params.email }, async (err, user) => {
       const subDoc = user.reminders.id(req.params.reminderId);
-      console.log(subDoc);
       subDoc.set(req.body);
       return user.save();
     });
