@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-dark bg-dark">
     <a class="navbar-brand" href="#">
-      <img src="https://a.storyblok.com/f/39898/1024x1024/dea4e1b62d/vue-js_logo-svg.png" width="40" height="40">
+      <img src="../../public/favicon-32x32.png" width="40" height="40">
     </a>
     <div>
       <img :src="$auth.user.picture" width="30" height="30">
