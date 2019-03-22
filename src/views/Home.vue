@@ -69,9 +69,7 @@ export default {
     const headers = {
       authorization: this.$auth.getAuthHeader().Authorization,
     }
-    axios.get('http://127.0.0.1:8081/api/public/', { headers })
-      .then((res) => console.log(res));
-    axios.get('http://127.0.0.1:8081/api/private/', { headers })
+    axios.get(`http://127.0.0.1:8081/api/users/${this.$auth.user.email}/reminders`, { headers })
       .then((res) => console.log(res));
   },
   methods: {
