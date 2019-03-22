@@ -55,13 +55,12 @@ exports.createReminderForUser = async (req, res) => {
 
 exports.updateReminderForUser = async (req, res) => {
   try {
-    const { email, reminderId } = req.params;
-    const updates = req.body;
-    console.log(updates);
-    const result = await User.find(
-      { reminders: { $elemMatch: { _id: reminderId } } },
-      //{ $set: { ...updates } },
-    );
+    const result = await User.findOne({ email: req.params.email }, async (err, user) => {
+      const subDoc = user.reminders.id(req.params.reminderId);
+      console.log(subDoc);
+      subDoc.set(req.body);
+      return user.save();
+    });
     res.json(result);
   } catch (e) {
     console.log(e);
