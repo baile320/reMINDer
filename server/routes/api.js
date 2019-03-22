@@ -25,12 +25,14 @@ mainApiRouter.get('/private-scoped',
 // private reminders)
 mainApiRouter.get('/users/:email/reminders',
   remindersControllers.getAllRemindersForUser);
-module.exports = mainApiRouter;
+
+mainApiRouter.post('/users/:email/reminders/',
+  remindersControllers.createReminderForUser);
 
 mainApiRouter.patch('/users/:email/reminders/:reminderId',
   remindersControllers.updateReminderForUser);
-module.exports = mainApiRouter;
 
 mainApiRouter.delete('/users/:email/reminders/:reminderId',
   remindersControllers.deleteReminderForUser);
+
 module.exports = mainApiRouter;

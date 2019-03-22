@@ -1,11 +1,15 @@
-const { Client } = require('pg');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 
-const db = new Client({
-  user: process.env.POSTGRES_USER || 'postgres',
-  host: process.env.POSTGRES_HOSTNAME || 'localhost',
-  database: process.env.POSTGRES_DB || 'reminders',
-  password: process.env.POSTGRES_PASSWORD || '',
-  port: process.env.POSTGRES_PORT || 5432,
-});
+dotenv.config();
+
+const dbHostName = process.env.DB_HOST || 'localhost';
+const dbPort = process.env.DB_PORT || 27017;
+const dbDatabaseName = process.env.DB_NAME || 'reminder';
+
+const db = mongoose.connect(`mongodb://${dbHostName}:${dbPort}/${dbDatabaseName}`,
+  { useNewUrlParser: true })
+  .then(() => console.log('Successfully connected to Mongo'))
+  .catch(err => console.log(err));
 
 module.exports.db = db;
