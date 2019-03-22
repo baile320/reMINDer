@@ -18,8 +18,8 @@
           be getting periodic e-mails with little gems of knowledge from yourself.
         </p>
         <blockquote class="blockquote">
-        <p>Blah Blah Blah</p>
-          <cite class="blockquote-footer">Some Old Dude</cite>
+        <p>This is a something you want to be reminded of, or maybe a motivational quote!</p>
+          <cite class="blockquote-footer">This is the author of the quote, and the source</cite>
         </blockquote>
         <h3 class="display-5">Schedule</h3>
         <p class="lead">
@@ -44,11 +44,6 @@
           </p>
       </div>
     </div>
-    <div class="container">
-      <div>
-
-      </div>
-    </div>
   </div>
 </template>
 
@@ -62,15 +57,8 @@ export default {
     TheNavBar,
   },
   data() {
-    return {
-    };
   },
   mounted() {
-    const headers = {
-      authorization: this.$auth.getAuthHeader().Authorization,
-    }
-    axios.get(`http://127.0.0.1:8081/api/users/${this.$auth.user.email}/reminders`, { headers })
-      .then((res) => console.log(res));
   },
   methods: {
   },
@@ -83,11 +71,6 @@ export default {
   background: #468f65;
   border: 1px solid #468f65;
 }
-.card {
-  text-decoration: none;
-  color: #000;
-}
-
 blockquote {
   border-left: 2px solid #000;
   padding-left: 10px;

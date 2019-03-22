@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import Callback from './views/Callback.vue';
+import Manage from './views/Manage.vue';
 
 Vue.use(Router);
 
@@ -17,6 +18,11 @@ const router = new Router({
       path: '/callback',
       name: 'callback',
       component: Callback,
+    },
+    {
+      path: '/manage',
+      name: 'manage',
+      component: Manage,
     },
   ],
 });

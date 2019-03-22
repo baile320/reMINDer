@@ -6,9 +6,9 @@
     <div>
       <img :src="$auth.user.picture" width="30" height="30">
       <span class="text-muted font-weight-light px-2">{{$auth.user.name}}</span>
-      <button type="button" class="btn btn-outline-secondary btn-sm">Home</button>
-      <button type="button" class="btn btn-outline-secondary btn-sm ml-1">Manage</button>
-      <button type="button" class="btn btn-outline-secondary btn-sm ml-1" @click="$auth.logout()">Logout</button>
+      <router-link to="/" class="btn btn-outline-secondary btn-sm">Home</router-link>
+      <router-link to="/manage" class="btn btn-outline-secondary btn-sm ml-1">Manage</router-link>
+      <router-link to="/logout" class="btn btn-outline-secondary btn-sm ml-1" @click="$auth.logout()">Logout</router-link>
     </div>
   </nav>
 </template>
