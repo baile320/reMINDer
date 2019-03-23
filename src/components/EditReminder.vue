@@ -1,7 +1,7 @@
 <template>
   <form>
     <div class="form-group">
-      <label for="reminderBody">Body</label>
+      <h5>Body</h5>
       <textarea
         class="form-control"
         id="reminderBody"
@@ -12,7 +12,7 @@
       </textarea>
     </div>
     <div class="form-group">
-      <label for="reminderAuthor">Author</label>
+      <h5>Author</h5>
       <input
         type="text"
         class="form-control"
@@ -22,7 +22,7 @@
       >
     </div>
     <div class="form-group">
-      <label for="reminderSource">Source</label>
+      <h5>Source</h5>
       <input
         type="text"
         class="form-control"
@@ -31,6 +31,7 @@
         v-model="form.source"
       >
     </div>
+    <h5>Tags</h5>
     <div class="form-group">
       <vue-tags-input
         class="form-group"

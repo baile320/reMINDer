@@ -1,8 +1,9 @@
 <template>
   <div>
     <blockquote class="blockquote">
-      <p>{{reminder.body}}</p>
+      {{reminder.body}}
       <cite class="blockquote-footer">{{reminder.author}}, {{reminder.source}}</cite>
+      <footer class="tags">tags: {{reminder.tags.join(', ')}}</footer>
     </blockquote>
     <button
       type="button"
@@ -60,5 +61,8 @@ export default {
 .btn-primary {
   background: #468f65;
   border: 1px solid #468f65;
+}
+.tags {
+  font-size: 0.75em;
 }
 </style>
