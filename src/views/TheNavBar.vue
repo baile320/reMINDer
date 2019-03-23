@@ -16,6 +16,7 @@
 <script>
 
 export default {
+  name: "TheNavBar",
   data() {
     return { };
   },

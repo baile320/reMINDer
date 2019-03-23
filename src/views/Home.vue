@@ -48,11 +48,12 @@
 </template>
 
 <script>
-import axios from 'axios';
-import auth from '../auth';
-import TheNavBar from './TheNavBar';
+import axios from "axios";
+import auth from "../auth";
+import TheNavBar from "./TheNavBar";
 
 export default {
+  name: "Home",
   components: {
     TheNavBar,
   },
@@ -66,7 +67,7 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css');
+@import url("https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css");
 .btn-primary {
   background: #468f65;
   border: 1px solid #468f65;

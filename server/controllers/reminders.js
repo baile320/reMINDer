@@ -46,7 +46,9 @@ exports.getAllRemindersForUser = async (req, res) => {
 exports.createReminderForUser = async (req, res) => {
   try {
     const user = { email: res.locals.user.email };
-    const result = await User.findOneAndUpdate(user, { $push: { reminders: req.body } });
+    const result = await User.findOneAndUpdate(user,
+      { $push: { reminders: req.body } },
+      { returnNewDocument: true });
     res.json(result);
   } catch (e) {
     console.log(e);
