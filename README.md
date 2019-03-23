@@ -30,4 +30,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 TODOS:
   - Adding & re-rendering is so slow... issues with auth?
-  - I shouldn't be fetching everything in Manage.onSave(), I should be able to ge the info much more easily.
+  - I shouldn't be fetching everything in Manage.onSave(), I should be able to ge the info much more easily... maybe investigate vuex for this.

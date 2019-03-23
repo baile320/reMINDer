@@ -92,7 +92,7 @@ export default {
       }
       axios.post(`http://127.0.0.1:8081/api/users/${this.$auth.user.email}/reminders/`, submission, { headers })
         .then(() => {
-          this.$emit('saved')
+          this.$emit('reminderChange')
           this.onClear();
         })
         .catch(err => console.log(err));
@@ -116,5 +116,9 @@ export default {
 /* FIX THE TAGS STYLING */
 .vue-tags-input {
   max-width: 100%;
+}
+.btn-primary {
+  background: #468f65;
+  border: 1px solid #468f65;
 }
 </style>

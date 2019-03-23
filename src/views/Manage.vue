@@ -6,11 +6,12 @@
       <textarea>placeholder</textarea>
       <ReminderList
         v-bind:reminders="reminders"
+        @reminderChange="onChange"
       >
       </ReminderList>
       <h1 class="display-5">Add</h1>
       <EditReminder
-        @saved="onSave"
+        @reminderChange="onChange"
       ></EditReminder>
     </div>
   </div>
@@ -47,7 +48,7 @@ export default {
       .catch(err => console.log(err));
   },
   methods: {
-    onSave (reminder) {
+    onChange (reminder) {
       // this is horrible. fix this.
       const headers = {
         authorization: this.$auth.getAuthHeader().Authorization,

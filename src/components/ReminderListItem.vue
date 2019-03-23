@@ -1,10 +1,29 @@
 <template>
   <div>
-    {{reminder.body}}
+    <blockquote class="blockquote">
+      <p>{{reminder.body}}</p>
+      <cite class="blockquote-footer">{{reminder.author}}, {{reminder.source}}</cite>
+    </blockquote>
+    <button
+      type="button"
+      class="btn btn-primary float-left"
+      v-on:click="onSave"
+    >
+      Edit
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger float-right"
+      v-on:click="onDelete"
+    >
+      Delete
+    </button>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+import auth from '../auth';
 
 export default {
   name: "ReminderListItem",
@@ -19,10 +38,27 @@ export default {
   mounted() {
   },
   methods: {
+    onDelete() {
+      const headers = {
+        authorization: this.$auth.getAuthHeader().Authorization,
+      }
+      axios.delete(
+        `http://127.0.0.1:8081/api/users/${this.$auth.user.email}/reminders/${this.reminder._id}`,
+        { headers })
+          .then(() => this.$emit('reminderChange'))
+          .catch(err => console.log(err));
+      },
+    onSave() {
+
+    }
   },
 };
 </script>
 
 <style scoped>
 @import url("https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css");
+.btn-primary {
+  background: #468f65;
+  border: 1px solid #468f65;
+}
 </style>

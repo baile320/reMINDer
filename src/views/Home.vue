@@ -58,6 +58,8 @@ export default {
     TheNavBar,
   },
   data() {
+    return {
+    }
   },
   mounted() {
   },
