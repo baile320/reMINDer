@@ -25,7 +25,7 @@ exports.privateScopedRoute = (req, res) => {
 
 exports.getAllRemindersForUser = async (req, res) => {
   try {
-    const user = { email: res.locals.user.email };
+    const user = { email: req.params.email };
     const result = await User.findOne(user);
 
     // if a user was not found, we create one and return it
@@ -45,7 +45,7 @@ exports.getAllRemindersForUser = async (req, res) => {
 
 exports.createReminderForUser = async (req, res) => {
   try {
-    const user = { email: res.locals.user.email };
+    const user = { email: req.params.email };
     const result = await User.findOneAndUpdate(user,
       { $push: { reminders: req.body } },
       { returnNewDocument: true });
@@ -57,7 +57,7 @@ exports.createReminderForUser = async (req, res) => {
 
 exports.updateReminderForUser = async (req, res) => {
   try {
-    const result = await User.findOne({ email: req.locals.user }, async (err, user) => {
+    const result = await User.findOne({ email: req.params.email }, async (err, user) => {
       const subDoc = user.reminders.id(req.params.reminderId);
       subDoc.set({ ...req.body, updatedAt: new Date() });
       return user.save();
@@ -70,9 +70,9 @@ exports.updateReminderForUser = async (req, res) => {
 
 exports.deleteReminderForUser = async (req, res) => {
   try {
-    const user = { email: res.locals.user.email };
+    const user = { email: req.params.email };
     const { reminderId } = req.params;
-    const result = await User.updateOne(user, { $pull: { reminders: { reminderId } } });
+    const result = await User.updateOne(user, { $pull: { reminders: { _id: reminderId } } });
     res.json(result);
   } catch (e) {
     console.log(e);
