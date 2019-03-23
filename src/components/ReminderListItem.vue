@@ -2,8 +2,22 @@
   <div>
     <blockquote class="blockquote">
       {{reminder.body}}
-      <cite class="blockquote-footer">{{reminder.author}}, {{reminder.source}}</cite>
-      <footer class="tags">tags: {{reminder.tags.join(', ')}}</footer>
+      <!-- display full if author & source -->
+      <cite
+        class="blockquote-footer"
+        v-if="reminder.author !== '' && reminder.source !== ''"
+      >
+        {{reminder.author}}, {{reminder.source}}
+      </cite>
+      <!-- don't display if whichever is provided -->
+      <cite
+        class="blockquote-footer"
+        v-else-if="reminder.author !== '' || reminder.source !== ''"
+      >
+        {{reminder.author + reminder.source}}
+      </cite>
+      <!-- don't display if no author & no source -->
+      <footer class="tags" v-if="reminder.tags.length > 0">tags: {{reminder.tags.join(', ')}}</footer>
     </blockquote>
     <button
       type="button"
