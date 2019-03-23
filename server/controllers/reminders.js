@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-const { userSchema, User } = require('../../database/models/User');
-const { reminderSchema, Reminder } = require('../../database/models/Reminder');
+const { User } = require('../../database/models/User');
 
 mongoose.Promise = global.Promise;
 // This route doesn't need authentication

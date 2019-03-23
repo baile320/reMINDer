@@ -63,47 +63,53 @@ import auth from "../auth";
 
 export default {
   name: "EditReminder",
+  props: ["form"],
   components: {
     VueTagsInput,
   },
   data() {
     return {
-      form: {
-        body: "",
-        author: "",
-        source: "",
-        tag: "",
-        tags: [],
-      }
     };
   },
   mounted() {
   },
   methods: {
-    onSave(event) {
+    onSave() {
       const headers = {
         authorization: this.$auth.getAuthHeader().Authorization,
       }
-      const submission = {
-        body: this.$data.form.body,
-        author: this.$data.form.author,
-        source: this.$data.form.source,
-        tags: this.$data.form.tags.map(el => el.text),
+      let submission = {
+        body: this.form.body,
+        author: this.form.author,
+        source: this.form.source,
+        tags: this.form.tags.map(el => el.text),
       }
+      // if we pass in an id, we patch
+      if (this.form._id !== "") {
+        submission = { _id: this.form._id, ...submission };
+        axios.patch(`http://127.0.0.1:8081/api/users/${this.$auth.user.email}/reminders/${this.form._id}`, submission, { headers })
+        .then(() => {
+          this.$emit('reminderChange')
+          this.onClear();
+        })
+        .catch(err => console.log(err));
+      } else {
+      // else we post
       axios.post(`http://127.0.0.1:8081/api/users/${this.$auth.user.email}/reminders/`, submission, { headers })
         .then(() => {
           this.$emit('reminderChange')
           this.onClear();
         })
         .catch(err => console.log(err));
+      }
     },
     onClear() {
       const self = this;
-      Object.keys(this.$data.form).forEach(function(key,index) {
-          if (typeof self.$data.form[key] === 'string') {
-            self.$data.form[key] = '';
-          } else if (Array.isArray(self.$data.form[key])) {
-            self.$data.form[key] = [];
+      Object.keys(this.form).forEach(function(key,index) {
+          if (typeof self.form[key] === 'string') {
+            self.form[key] = '';
+          } else if (Array.isArray(self.form[key])) {
+            self.form[key] = [];
           }
       });
     }

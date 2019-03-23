@@ -45,11 +45,11 @@ export default {
       axios.delete(
         `http://127.0.0.1:8081/api/users/${this.$auth.user.email}/reminders/${this.reminder._id}`,
         { headers })
-          .then(() => this.$emit('reminderChange'))
+          .then(() => this.$emit('reminderDelete'))
           .catch(err => console.log(err));
       },
     onSave() {
-
+      this.$emit('reminderChange', this.reminder._id);
     }
   },
 };

@@ -4,7 +4,8 @@
       <ul class="list-group" v-for="reminder in reminders" v-bind:key="reminder._id">
         <reminderListItem
           v-bind:reminder="reminder"
-          v-on:reminderChange="$emit('reminderChange')"
+          v-on:reminderChange="$emit('reminderChange', reminder)"
+          v-on:reminderDelete="$emit('reminderChange')"
           class="list-group-item mt-1"
         >
         </reminderListItem>
@@ -23,7 +24,6 @@ export default {
   },
   data() {
     return {
-
     };
   },
   mounted() {

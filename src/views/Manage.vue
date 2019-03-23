@@ -7,11 +7,13 @@
       <ReminderList
         v-bind:reminders="reminders"
         @reminderChange="onChange"
+        @reminderDelete="onChange"
       >
       </ReminderList>
       <h1 class="display-5">Add</h1>
       <EditReminder
         @reminderChange="onChange"
+        v-bind:form="form"
       ></EditReminder>
     </div>
   </div>
@@ -34,6 +36,14 @@ export default {
   data() {
     return {
       reminders: [],
+      form: {
+        _id: "",
+        body: "",
+        author: "",
+        source: "",
+        tag: "",
+        tags: [],
+      },
     };
   },
   mounted() {
@@ -49,6 +59,18 @@ export default {
   },
   methods: {
     onChange (reminder) {
+      // if a reminder is provided, we put it in the edit form
+      if (reminder) {
+        this.$data.form._id = reminder._id;
+        this.$data.form.body = reminder.body;
+        this.$data.form.author = reminder.author;
+        this.$data.form.source = reminder.source;
+        // this is a hack to get the vue-tags-input library to work nicely
+        this.$data.form.tags = reminder.tags.map(el => {
+          return { text: el, tiClasses: "ti-valid" }
+        });
+      }
+      // if we add or delete, we re-fetch the reminders
       // this is horrible. fix this.
       const headers = {
         authorization: this.$auth.getAuthHeader().Authorization,
