@@ -2,25 +2,6 @@ const mongoose = require('mongoose');
 const { User } = require('../../database/models/User');
 
 mongoose.Promise = global.Promise;
-// This route doesn't need authentication
-exports.publicRoute = (req, res) => {
-  res.json({
-    message: 'Hello from a public endpoint! You don\'t need to be authenticated to see this.',
-  });
-};
-
-// This route need authentication
-exports.privateRoute = (req, res) => {
-  res.json({
-    message: 'Hello from a private endpoint! You need to be authenticated to see this.',
-  });
-};
-
-exports.privateScopedRoute = (req, res) => {
-  res.json({
-    message: 'Hello from a private endpoint! You need to be authenticated and have a scope of read:messages to see this.',
-  });
-};
 
 exports.getAllRemindersForUser = async (req, res) => {
   try {
@@ -75,5 +56,34 @@ exports.deleteReminderForUser = async (req, res) => {
     res.json(result);
   } catch (e) {
     console.log(e);
+  }
+};
+
+exports.getRemindersForEmailer = async (email, lt) => {
+  try {
+    const result = await User.aggregate([
+      { $match: { email } },
+      { $unwind: '$reminders' },
+      { $match: { 'reminders.lastSent': { $lt: new Date(lt) } } },
+      { $group: { _id: '$_id', reminders: { $push: '$reminders' } } },
+    ]);
+    // emails are unique, so we only need first item in the returned array
+    return result[0].reminders;
+  } catch (e) {
+    return e;
+  }
+};
+
+exports.updateForEmailer = async (email, reminderId, updates) => {
+  try {
+    const result = await User.findOne({ email }, async (err, user) => {
+      const subDoc = user.reminders.id(reminderId);
+      console.log(subDoc);
+      subDoc.set({ ...updates });
+      return user.save();
+    });
+    return result;
+  } catch (e) {
+    return e;
   }
 };
