@@ -9,6 +9,10 @@ dotenv.config();
 /*
   TODOS:
     - improve the "random" quote selection. is it even random right now?
+    IDEAS:
+      find 1 - 3 (random) quotes that are:
+      - in the bottom 10 rank of sentCount
+      - lastSent older than 3 days
     - make more dynamic:
       - should work for all users (at once or in batches)
       - should not require all of the process.env stuff
@@ -34,17 +38,11 @@ const mailOptions = {
   to: `${process.env.username} <${process.env.userEmail}>`,
 };
 
-/*
-  find 1 - 3 (random) quotes that are:
-  - in the bottom 10 rank of sentCount
-  - lastSent older than 3 days
-*/
 function fetchTodaysQuotes() {
   const THREE_DAYS_AGO = moment(today).add(-3, 'days').toISOString();
   // fetch quotes
   return getRemindersForEmailer(process.env.userEmail, THREE_DAYS_AGO)
-    // .limit(10)
-    // .sort({ lastSent: 'asc', sentCount: 'desc' })
+
     .then((allQuotes) => {
       // create quote array to return
       const quotes = [];
