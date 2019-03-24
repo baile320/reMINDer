@@ -3,9 +3,17 @@
     <TheNavBar></TheNavBar>
     <div class="container">
       <h1 class="display-5">Search</h1>
-      <textarea>placeholder</textarea>
+      <textarea
+        class="form-control"
+        id="search"
+        rows="1"
+        placeholder="Search"
+        v-model="searchTag"
+      >
+      </textarea>
       <ReminderList
         v-bind:reminders="reminders"
+        v-bind:searchTag="searchTag"
         @reminderChange="onChange"
         @reminderDelete="onChange"
       >
@@ -35,6 +43,7 @@ export default {
   },
   data() {
     return {
+      searchTag: "",
       reminders: [],
       form: {
         _id: "",

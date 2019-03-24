@@ -1,7 +1,11 @@
 <template>
   <div>
     <h1 class="display-5">Reminder List</h1>
-      <ul class="list-group" v-for="reminder in reminders" v-bind:key="reminder._id">
+      <ul
+        class="list-group"
+        v-for="reminder in filterRemindersByTag(searchTag)"
+        v-bind:key="reminder._id"
+      >
         <reminderListItem
           v-bind:reminder="reminder"
           v-on:reminderChange="$emit('reminderChange', reminder)"
@@ -18,7 +22,7 @@ import ReminderListItem from "../components/ReminderListItem";
 
 export default {
   name: "ReminderList",
-  props: ["reminders"],
+  props: ["reminders", "searchTag"],
   components: {
     ReminderListItem
   },
@@ -29,6 +33,12 @@ export default {
   mounted() {
   },
   methods: {
+    filterRemindersByTag(tag) {
+      return this.reminders.filter(reminder => {
+        if (tag === '') { return true }
+        return reminder.tags.includes(tag)
+      })
+    }
   },
 };
 </script>
