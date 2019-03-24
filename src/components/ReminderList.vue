@@ -18,13 +18,13 @@
 </template>
 
 <script>
-import ReminderListItem from "../components/ReminderListItem";
+import ReminderListItem from './ReminderListItem.vue';
 
 export default {
-  name: "ReminderList",
-  props: ["reminders", "searchTag"],
+  name: 'ReminderList',
+  props: ['reminders', 'searchTag'],
   components: {
-    ReminderListItem
+    ReminderListItem,
   },
   data() {
     return {
@@ -34,11 +34,11 @@ export default {
   },
   methods: {
     filterRemindersByTag(tag) {
-      return this.reminders.filter(reminder => {
-        if (tag === '') { return true }
-        return reminder.tags.includes(tag)
-      })
-    }
+      return this.reminders.filter((reminder) => {
+        if (tag === '') { return true; }
+        return reminder.tags.includes(tag);
+      });
+    },
   },
 };
 </script>

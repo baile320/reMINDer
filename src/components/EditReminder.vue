@@ -58,13 +58,12 @@
 </template>
 
 <script>
-import axios from "axios";
-import VueTagsInput from "@johmun/vue-tags-input";
-import auth from "../auth";
+import axios from 'axios';
+import VueTagsInput from '@johmun/vue-tags-input';
 
 export default {
-  name: "EditReminder",
-  props: ["form"],
+  name: 'EditReminder',
+  props: ['form'],
   components: {
     VueTagsInput,
   },
@@ -78,42 +77,42 @@ export default {
     onSave() {
       const headers = {
         authorization: this.$auth.getAuthHeader().Authorization,
-      }
+      };
       let submission = {
         body: this.form.body,
         author: this.form.author,
         source: this.form.source,
         tags: this.form.tags.map(el => el.text),
-      }
+      };
       // if we pass in an id, we patch
-      if (this.form._id !== "") {
+      if (this.form._id !== '') {
         submission = { _id: this.form._id, ...submission };
         axios.patch(`http://127.0.0.1:8081/api/users/${this.$auth.user.email}/reminders/${this.form._id}`, submission, { headers })
-        .then(() => {
-          this.$emit('reminderChange')
-          this.onClear();
-        })
-        .catch(err => console.log(err));
+          .then(() => {
+            this.$emit('reminderChange');
+            this.onClear();
+          })
+          .catch(err => console.log(err));
       } else {
       // else we post
-      axios.post(`http://127.0.0.1:8081/api/users/${this.$auth.user.email}/reminders/`, submission, { headers })
-        .then(() => {
-          this.$emit('reminderChange')
-          this.onClear();
-        })
-        .catch(err => console.log(err));
+        axios.post(`http://127.0.0.1:8081/api/users/${this.$auth.user.email}/reminders/`, submission, { headers })
+          .then(() => {
+            this.$emit('reminderChange');
+            this.onClear();
+          })
+          .catch(err => console.log(err));
       }
     },
     onClear() {
       const self = this;
-      Object.keys(this.form).forEach(function(key,index) {
-          if (typeof self.form[key] === 'string') {
-            self.form[key] = '';
-          } else if (Array.isArray(self.form[key])) {
-            self.form[key] = [];
-          }
+      Object.keys(this.form).forEach((key) => {
+        if (typeof self.form[key] === 'string') {
+          self.form[key] = '';
+        } else if (Array.isArray(self.form[key])) {
+          self.form[key] = [];
+        }
       });
-    }
+    },
   },
 };
 </script>

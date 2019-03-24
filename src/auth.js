@@ -1,3 +1,6 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-param-reassign */
+/* eslint-disable camelcase */
 import auth0 from 'auth0-js';
 import Vue from 'vue';
 
@@ -54,7 +57,7 @@ const auth = new Vue({
       webAuth.authorize();
     },
     logout() {
-      return new Promise((resolve, reject) => {
+      return new Promise(() => {
         localStorage.removeItem('access_token');
         localStorage.removeItem('id_token');
         localStorage.removeItem('expires_at');

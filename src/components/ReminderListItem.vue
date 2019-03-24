@@ -17,7 +17,12 @@
         {{reminder.author + reminder.source}}
       </cite>
       <!-- don't display if no author & no source -->
-      <footer class="tags" v-if="reminder.tags.length > 0">tags: {{reminder.tags.join(', ')}}</footer>
+      <footer
+        class="tags"
+        v-if="reminder.tags.length > 0"
+      >
+        tags: {{reminder.tags.join(', ')}}
+      </footer>
     </blockquote>
     <button
       type="button"
@@ -38,11 +43,10 @@
 
 <script>
 import axios from 'axios';
-import auth from '../auth';
 
 export default {
-  name: "ReminderListItem",
-  props: ["reminder"],
+  name: 'ReminderListItem',
+  props: ['reminder'],
   components: {
   },
   data() {
@@ -56,16 +60,17 @@ export default {
     onDelete() {
       const headers = {
         authorization: this.$auth.getAuthHeader().Authorization,
-      }
+      };
       axios.delete(
         `http://127.0.0.1:8081/api/users/${this.$auth.user.email}/reminders/${this.reminder._id}`,
-        { headers })
-          .then(() => this.$emit('reminderDelete'))
-          .catch(err => console.log(err));
-      },
+        { headers },
+      )
+        .then(() => this.$emit('reminderDelete'))
+        .catch(err => console.log(err));
+    },
     onSave() {
       this.$emit('reminderChange', this.reminder._id);
-    }
+    },
   },
 };
 </script>

@@ -28,29 +28,28 @@
 </template>
 
 <script>
-import axios from "axios";
-import auth from "../auth";
-import TheNavBar from "./TheNavBar";
-import EditReminder from "../components/EditReminder";
-import ReminderList from "../components/ReminderList";
+import axios from 'axios';
+import TheNavBar from './TheNavBar.vue';
+import EditReminder from '../components/EditReminder.vue';
+import ReminderList from '../components/ReminderList.vue';
 
 export default {
-  name: "Manage",
+  name: 'Manage',
   components: {
     TheNavBar,
     EditReminder,
-    ReminderList
+    ReminderList,
   },
   data() {
     return {
-      searchTag: "",
+      searchTag: '',
       reminders: [],
       form: {
-        _id: "",
-        body: "",
-        author: "",
-        source: "",
-        tag: "",
+        _id: '',
+        body: '',
+        author: '',
+        source: '',
+        tag: '',
         tags: [],
       },
     };
@@ -58,16 +57,16 @@ export default {
   mounted() {
     const headers = {
       authorization: this.$auth.getAuthHeader().Authorization,
-    }
+    };
     axios.get(`http://127.0.0.1:8081/api/users/${this.$auth.user.email}/reminders`, { headers })
-      .then(response => {
+      .then((response) => {
         const { reminders } = response.data;
         this.$data.reminders = reminders;
       })
       .catch(err => console.log(err));
   },
   methods: {
-    onChange (reminder) {
+    onChange(reminder) {
       // if a reminder is provided, we put it in the edit form
       if (reminder) {
         this.$data.form._id = reminder._id;
@@ -75,22 +74,20 @@ export default {
         this.$data.form.author = reminder.author;
         this.$data.form.source = reminder.source;
         // this is a hack to get the vue-tags-input library to work nicely
-        this.$data.form.tags = reminder.tags.map(el => {
-          return { text: el, tiClasses: "ti-valid" }
-        });
+        this.$data.form.tags = reminder.tags.map(el => ({ text: el, tiClasses: 'ti-valid' }));
       }
       // if we add or delete, we re-fetch the reminders
       // this is horrible. fix this.
       const headers = {
         authorization: this.$auth.getAuthHeader().Authorization,
-      }
+      };
       axios.get(`http://127.0.0.1:8081/api/users/${this.$auth.user.email}/reminders`, { headers })
-        .then(response => {
+        .then((response) => {
           const { reminders } = response.data;
           this.$data.reminders = reminders;
         })
-      .catch(err => console.log(err));
-    }
+        .catch(err => console.log(err));
+    },
   },
 };
 </script>

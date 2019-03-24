@@ -48,18 +48,16 @@
 </template>
 
 <script>
-import axios from "axios";
-import auth from "../auth";
-import TheNavBar from "./TheNavBar";
+import TheNavBar from './TheNavBar.vue';
 
 export default {
-  name: "Home",
+  name: 'Home',
   components: {
     TheNavBar,
   },
   data() {
     return {
-    }
+    };
   },
   mounted() {
   },
