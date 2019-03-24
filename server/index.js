@@ -15,5 +15,3 @@ app.listen(port, async () => {
 schedule.scheduleJob('0 0 * * *', () => {
   sendTodaysQuotes();
 });
-
-sendTodaysQuotes();
