@@ -34,6 +34,4 @@ TODOS:
   - Improve the search in ReminderListVue, currently only searches for one tag.
 
   - VUEX Migration:
-    - ReminderList filterRemindersByTag(this.$store.state.searchTerm)
-    - Edit button should update form state
-    - Delete / Post save to DB, but do not update form state.
+    - custom validator for tag/tags not working

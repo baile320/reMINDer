@@ -3,7 +3,7 @@
     <h1 class="display-5">Reminder List</h1>
       <ul
         class="list-group"
-        v-for="(reminder) in filterRemindersByTag('')"
+        v-for="(reminder) in filterRemindersByTag(this.$store.state.searchTerm)"
         v-bind:key="reminder._id"
       >
         <reminderListItem

@@ -25,12 +25,25 @@ const mutations = {
     // delete reminder id from state.reminders
     for (let i = 0; i < state.reminders.length; i += 1) {
       if (state.reminders[i]._id === id) {
-        state.reminders[i].splice(i, 1);
+        state.reminders.splice(i, 1);
+      }
+    }
+  },
+  EDIT_REMINDER(state, id) {
+    for (let i = 0; i < state.reminders.length; i += 1) {
+      if (state.reminders[i]._id === id) {
+        state.form._id = state.reminders[i]._id;
+        state.form.body = state.reminders[i].body;
+        state.form.author = state.reminders[i].author;
+        state.form.source = state.reminders[i].source;
+        state.form.tag = state.reminders[i].tag;
+        state.form.tags = state.reminders[i].tags;
       }
     }
   },
   FETCH_REMINDERS(state, reminders) {
-    state.reminders = reminders;
+    state.reminders = [];
+    state.reminders.push(...reminders);
   },
   ADD_REMINDER(state, newReminder) {
     state.reminders.push(newReminder);
@@ -47,6 +60,9 @@ const mutations = {
 };
 
 const actions = {
+  editReminder: ({ commit }, id) => {
+    commit('EDIT_REMINDER', id);
+  },
   formSubmit: ({ commit }, payload) => {
     const {
       headers,
@@ -60,14 +76,14 @@ const actions = {
       submission._id = _id;
       axios.patch(`http://127.0.0.1:8081/api/users/${email}/reminders/${_id}`, submission, { headers })
         .then((response) => {
-          console.log(response);
+          commit('FETCH_REMINDERS', response.data.reminders);
           commit('CLEAR_FORM');
         })
         .catch(err => console.log(err));
     } else {
       axios.post(`http://127.0.0.1:8081/api/users/${email}/reminders/`, submission, { headers })
         .then((response) => {
-          console.log(response);
+          commit('FETCH_REMINDERS', response.data.reminders);
           commit('CLEAR_FORM');
         })
         .catch(err => console.log(err));
@@ -78,10 +94,9 @@ const actions = {
   deleteReminder: ({ commit }, payload) => {
     const { headers, _id } = payload;
     // delete fom mongodb
-    console.log(_id);
     axios.delete(`http://127.0.0.1:8081/api/users/${payload.email}/reminders/${_id}`, { headers })
     // delete from state
-      .then(() => commit('DELETE_REMINDER'))
+      .then(() => commit('DELETE_REMINDER', _id))
       .catch(err => console.log(err));
   },
   fetchReminders: ({ commit }, payload) => {

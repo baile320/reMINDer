@@ -27,6 +27,7 @@
     <button
       type="button"
       class="btn btn-primary float-left"
+      v-on:click="onEdit"
     >
       Edit
     </button>
@@ -53,6 +54,9 @@ export default {
     };
   },
   methods: {
+    onEdit() {
+      this.$store.dispatch("editReminder", this.reminder._id)
+    },
     onDelete() {
       const payload = {
         headers: { authorization: this.$auth.getAuthHeader().Authorization },

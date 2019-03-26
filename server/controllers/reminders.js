@@ -28,7 +28,7 @@ exports.createReminderForUser = async (req, res) => {
     const user = { email: req.params.email };
     const result = await User.findOneAndUpdate(user,
       { $push: { reminders: req.body } },
-      { returnNewDocument: true });
+      { new: true });
     res.json(result);
   } catch (e) {
     console.log(e);
@@ -37,11 +37,12 @@ exports.createReminderForUser = async (req, res) => {
 
 exports.updateReminderForUser = async (req, res) => {
   try {
-    const result = await User.findOne({ email: req.params.email }, async (err, user) => {
+    await User.findOne({ email: req.params.email }, async (err, user) => {
       const subDoc = user.reminders.id(req.params.reminderId);
       subDoc.set({ ...req.body, updatedAt: new Date() });
       return user.save();
     });
+    const result = await User.findOneAndUpdate({ email: req.params.email }, {}, { new: true });
     res.json(result);
   } catch (e) {
     console.log(e);
