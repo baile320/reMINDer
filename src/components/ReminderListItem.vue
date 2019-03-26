@@ -27,14 +27,12 @@
     <button
       type="button"
       class="btn btn-primary float-left"
-      v-on:click="onSave"
     >
       Edit
     </button>
     <button
       type="button"
       class="btn btn-danger float-right"
-      v-on:click="onDelete"
     >
       Delete
     </button>
@@ -46,12 +44,11 @@ import axios from 'axios';
 
 export default {
   name: 'ReminderListItem',
-  props: ['reminder'],
   components: {
   },
+  props: ['reminder'],
   data() {
     return {
-
     };
   },
   mounted() {
@@ -65,11 +62,7 @@ export default {
         `http://127.0.0.1:8081/api/users/${this.$auth.user.email}/reminders/${this.reminder._id}`,
         { headers },
       )
-        .then(() => this.$emit('reminderDelete'))
         .catch(err => console.log(err));
-    },
-    onSave() {
-      this.$emit('reminderChange', this.reminder._id);
     },
   },
 };
