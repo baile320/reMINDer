@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import ReminderListItem from './ReminderListItem.vue';
 
 export default {
@@ -35,6 +36,12 @@ export default {
       });
     },
   },
+  computed: {
+    ...mapState({
+      reminders: state => state.reminders,
+      searchTerm: state => state.searchTerm,
+    })
+  }
 };
 </script>
 

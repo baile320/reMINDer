@@ -66,10 +66,16 @@ const actions = {
   formSubmit: ({ commit }, payload) => {
     const {
       headers,
-      _id,
       email,
-      submission,
     } = payload;
+
+    const submission = {
+      body: state.form.body,
+      author: state.form.author,
+      source: state.form.source,
+      tags: state.form.tags.map(el => el.text),
+    };
+    const { _id } = state.form;
 
     // send form to api (if edit, we include ID and patch, else post)
     if (_id !== '') {

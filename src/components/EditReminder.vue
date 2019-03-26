@@ -76,14 +76,7 @@ export default {
     onSave() {
       const payload = {
         headers: { authorization: this.$auth.getAuthHeader().Authorization },
-        submission: {
-          body: this.$store.state.form.body,
-          author: this.$store.state.form.author,
-          source: this.$store.state.form.source,
-          tags: this.$store.state.form.tags.map(el => el.text),
-        },
         email: this.$auth.user.email,
-        _id: this.$store.state.form._id,
       };
       this.$store.dispatch('formSubmit', payload);
     },
@@ -92,13 +85,13 @@ export default {
     },
   },
   computed: {
-    ...mapFields([
-      'form.body',
-      'form.author',
-      'form.source',
-      'form.tag',
-      'form.tags',
-    ]),
+    ...mapFields({
+      body: 'form.body',
+      author: 'form.author',
+      source: 'form.source',
+      tag: 'form.tag',
+      tags:'form.tags',
+    }),
   },
 };
 </script>
