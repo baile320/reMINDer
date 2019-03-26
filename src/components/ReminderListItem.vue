@@ -42,8 +42,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
   name: 'ReminderListItem',
   components: {
@@ -55,7 +53,7 @@ export default {
   },
   methods: {
     onEdit() {
-      this.$store.dispatch("editReminder", this.reminder._id)
+      this.$store.dispatch('editReminder', this.reminder._id);
     },
     onDelete() {
       const payload = {
@@ -63,7 +61,7 @@ export default {
         email: this.$auth.user.email,
         _id: this.reminder._id,
       };
-      this.$store.dispatch("deleteReminder", payload)
+      this.$store.dispatch('deleteReminder', payload);
     },
   },
 };

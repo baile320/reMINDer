@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import { mapFields } from 'vuex-map-fields';
 import TheNavBar from './TheNavBar.vue';
 import EditReminder from '../components/EditReminder.vue';
@@ -34,17 +33,17 @@ export default {
   },
   data() {
     return {
-    }
+    };
   },
   created() {
     const payload = {
       headers: { authorization: this.$auth.getAuthHeader().Authorization },
       email: this.$auth.user.email,
     };
-    this.$store.dispatch("fetchReminders", payload)
+    this.$store.dispatch('fetchReminders', payload);
   },
   computed: {
-  ...mapFields([
+    ...mapFields([
       'searchTerm',
     ]),
   },

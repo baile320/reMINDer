@@ -58,7 +58,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import { mapFields } from 'vuex-map-fields';
 import VueTagsInput from '@johmun/vue-tags-input';
 
@@ -92,7 +91,7 @@ export default {
       this.$store.dispatch('clearForm');
     },
   },
-    computed: {
+  computed: {
     ...mapFields([
       'form.body',
       'form.author',
