@@ -3,13 +3,11 @@
     <h1 class="display-5">Reminder List</h1>
       <ul
         class="list-group"
-        v-for="reminder in filterRemindersByTag(searchTag)"
+        v-for="(reminder) in filterRemindersByTag(this.$store.state.searchTerm)"
         v-bind:key="reminder._id"
       >
         <reminderListItem
           v-bind:reminder="reminder"
-          v-on:reminderChange="$emit('reminderChange', reminder)"
-          v-on:reminderDelete="$emit('reminderChange')"
           class="list-group-item mt-1"
         >
         </reminderListItem>
@@ -22,7 +20,6 @@ import ReminderListItem from './ReminderListItem.vue';
 
 export default {
   name: 'ReminderList',
-  props: ['reminders', 'searchTag'],
   components: {
     ReminderListItem,
   },
@@ -30,11 +27,9 @@ export default {
     return {
     };
   },
-  mounted() {
-  },
   methods: {
     filterRemindersByTag(tag) {
-      return this.reminders.filter((reminder) => {
+      return this.$store.state.reminders.filter((reminder) => {
         if (tag === '') { return true; }
         return reminder.tags.includes(tag);
       });

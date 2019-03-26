@@ -30,5 +30,9 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 TODOS:
   - Adding & re-rendering is so slow... issues with auth?
-  - I shouldn't be fetching everything in Manage.onSave(), I should be able to ge the info much more easily... maybe investigate vuex for this.
   - Improve the search in ReminderListVue, currently only searches for one tag.
+
+  - VUEX Migration:
+    - custom validator for tag/tags not working
+    - Organize store.js into components, look to make simpler?
+      - e.g. I had to change the controller for the edit -> save. maybe there is a nicer way to do that.
