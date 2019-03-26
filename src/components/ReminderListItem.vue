@@ -33,6 +33,7 @@
     <button
       type="button"
       class="btn btn-danger float-right"
+      v-on:click="onDelete"
     >
       Delete
     </button>
@@ -51,18 +52,14 @@ export default {
     return {
     };
   },
-  mounted() {
-  },
   methods: {
     onDelete() {
-      const headers = {
-        authorization: this.$auth.getAuthHeader().Authorization,
+      const payload = {
+        headers: { authorization: this.$auth.getAuthHeader().Authorization },
+        email: this.$auth.user.email,
+        _id: this.reminder._id,
       };
-      axios.delete(
-        `http://127.0.0.1:8081/api/users/${this.$auth.user.email}/reminders/${this.reminder._id}`,
-        { headers },
-      )
-        .catch(err => console.log(err));
+      this.$store.dispatch("deleteReminder", payload)
     },
   },
 };

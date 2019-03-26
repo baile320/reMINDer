@@ -46,17 +46,43 @@ const mutations = {
   updateField,
 };
 
-// actions are functions that cause side effects and can involve
-// asynchronous operations.
 const actions = {
-  formSubmit: ({ commit }) => {
-    // send form to api (if edit, we include ID, else not)
+  formSubmit: ({ commit }, payload) => {
+    const {
+      headers,
+      _id,
+      email,
+      submission,
+    } = payload;
+
+    // send form to api (if edit, we include ID and patch, else post)
+    if (_id !== '') {
+      submission._id = _id;
+      axios.patch(`http://127.0.0.1:8081/api/users/${email}/reminders/${_id}`, submission, { headers })
+        .then((response) => {
+          console.log(response);
+          commit('CLEAR_FORM');
+        })
+        .catch(err => console.log(err));
+    } else {
+      axios.post(`http://127.0.0.1:8081/api/users/${email}/reminders/`, submission, { headers })
+        .then((response) => {
+          console.log(response);
+          commit('CLEAR_FORM');
+        })
+        .catch(err => console.log(err));
+    }
     // send form contents/response to reminders array
     // clear submitted form
   },
-  deleteReminder: ({ commit, id }) => {
-    // delete from state
+  deleteReminder: ({ commit }, payload) => {
+    const { headers, _id } = payload;
     // delete fom mongodb
+    console.log(_id);
+    axios.delete(`http://127.0.0.1:8081/api/users/${payload.email}/reminders/${_id}`, { headers })
+    // delete from state
+      .then(() => commit('DELETE_REMINDER'))
+      .catch(err => console.log(err));
   },
   fetchReminders: ({ commit }, payload) => {
     const { headers } = payload;
@@ -66,15 +92,15 @@ const actions = {
       })
       .catch(err => console.log(err));
   },
+  clearForm: ({ commit }) => {
+    commit('CLEAR_FORM');
+  },
 };
 
-// getters are functions
 const getters = {
   getField,
 };
 
-// A Vuex instance is created by combining the state, mutations, actions,
-// and getters.
 export default new Vuex.Store({
   state,
   getters,

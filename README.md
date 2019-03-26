@@ -32,3 +32,8 @@ TODOS:
   - Adding & re-rendering is so slow... issues with auth?
   - I shouldn't be fetching everything in Manage.onSave(), I should be able to ge the info much more easily... maybe investigate vuex for this.
   - Improve the search in ReminderListVue, currently only searches for one tag.
+
+  - VUEX Migration:
+    - ReminderList filterRemindersByTag(this.$store.state.searchTerm)
+    - Edit button should update form state
+    - Delete / Post save to DB, but do not update form state.

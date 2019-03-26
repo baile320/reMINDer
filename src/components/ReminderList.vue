@@ -3,7 +3,7 @@
     <h1 class="display-5">Reminder List</h1>
       <ul
         class="list-group"
-        v-for="(reminder) in this.$store.state.reminders"
+        v-for="(reminder) in filterRemindersByTag('')"
         v-bind:key="reminder._id"
       >
         <reminderListItem
@@ -26,8 +26,6 @@ export default {
   data() {
     return {
     };
-  },
-  mounted() {
   },
   methods: {
     filterRemindersByTag(tag) {

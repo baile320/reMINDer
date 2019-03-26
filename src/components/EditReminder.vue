@@ -75,41 +75,21 @@ export default {
   },
   methods: {
     onSave() {
-      const headers = {
-        authorization: this.$auth.getAuthHeader().Authorization,
+      const payload = {
+        headers: { authorization: this.$auth.getAuthHeader().Authorization },
+        submission: {
+          body: this.$store.state.form.body,
+          author: this.$store.state.form.author,
+          source: this.$store.state.form.source,
+          tags: this.$store.state.form.tags.map(el => el.text),
+        },
+        email: this.$auth.user.email,
+        _id: this.$store.state.form._id,
       };
-      let submission = {
-        body: this.$state.form.body,
-        author: this.$state.form.author,
-        source: this.$state.form.source,
-        tags: this.$state.form.tags.map(el => el.text),
-      };
-      // if we pass in an id, we patch
-      if (this.$state.form._id !== '') {
-        submission = { _id: this.$state.form._id, ...submission };
-        axios.patch(`http://127.0.0.1:8081/api/users/${this.$auth.user.email}/reminders/${this.$state.form._id}`, submission, { headers })
-          .then(() => {
-            this.onClear();
-          })
-          .catch(err => console.log(err));
-      } else {
-      // else we post
-        axios.post(`http://127.0.0.1:8081/api/users/${this.$auth.user.email}/reminders/`, submission, { headers })
-          .then(() => {
-            this.onClear();
-          })
-          .catch(err => console.log(err));
-      }
+      this.$store.dispatch('formSubmit', payload);
     },
     onClear() {
-      const self = this;
-      Object.keys(this.form).forEach((key) => {
-        if (typeof self.form[key] === 'string') {
-          self.form[key] = '';
-        } else if (Array.isArray(self.form[key])) {
-          self.form[key] = [];
-        }
-      });
+      this.$store.dispatch('clearForm');
     },
   },
     computed: {

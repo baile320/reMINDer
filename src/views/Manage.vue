@@ -41,15 +41,12 @@ export default {
       headers: { authorization: this.$auth.getAuthHeader().Authorization },
       email: this.$auth.user.email,
     };
-    this.$store.dispatch("fetchReminders", payload).then(() => {
-    })
+    this.$store.dispatch("fetchReminders", payload)
   },
   computed: {
   ...mapFields([
       'searchTerm',
     ]),
-  },
-  methods: {
   },
 };
 </script>
