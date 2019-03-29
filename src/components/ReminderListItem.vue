@@ -44,8 +44,6 @@
 <script>
 export default {
   name: 'ReminderListItem',
-  components: {
-  },
   props: ['reminder'],
   data() {
     return {
