@@ -20,7 +20,7 @@ describe('ReminderList.vue', () => {
       state,
     });
     const wrapper = mount(ReminderList, { store, localVue });
-    expect(wrapper.findAll(ReminderListItem).length).toBe(4);
+    expect(wrapper.findAll(ReminderListItem).length).toBe(reminders.length);
   });
 
   it('filters the ReminderListItems by a tag', () => {
@@ -33,6 +33,7 @@ describe('ReminderList.vue', () => {
       state,
     });
     const wrapper = mount(ReminderList, { store, localVue });
-    expect(wrapper.findAll(ReminderListItem).length).toBe(2);
+    const numReminders = reminders.filter(reminder => reminder.tags.includes('Law')).length
+    expect(wrapper.findAll(ReminderListItem).length).toBe(numReminders);
   });
 });
