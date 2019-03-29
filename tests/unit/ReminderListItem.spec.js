@@ -6,7 +6,7 @@ describe('ReminderListItem.vue', () => {
   const wrapper = mount(ReminderListItem, {
     propsData: {
       reminder: {
-        ...reminders.reminder1,
+        ...reminders[0],
       },
     },
   });
@@ -14,7 +14,7 @@ describe('ReminderListItem.vue', () => {
   const wrapperNoAuthorNoTags = mount(ReminderListItem, {
     propsData: {
       reminder: {
-        ...reminders.reminder2,
+        ...reminders[1],
       },
     },
   });
@@ -22,7 +22,7 @@ describe('ReminderListItem.vue', () => {
   const wrapperNoSource = mount(ReminderListItem, {
     propsData: {
       reminder: {
-        ...reminders.reminder3,
+        ...reminders[2],
       },
     },
   });
@@ -30,17 +30,17 @@ describe('ReminderListItem.vue', () => {
   const wrapperNoAuthorNoSource = mount(ReminderListItem, {
     propsData: {
       reminder: {
-        ...reminders.reminder4,
+        ...reminders[3],
       },
     },
   });
 
-  it('Displays a quote', () => {
+  it('displays a quote', () => {
     expect(wrapper.find('blockquote').text())
       .toContain('Well as, one judge said to the other');
   });
 
-  it('Displays author & source appropriately in all cases', () => {
+  it('displays author & source appropriately in all cases', () => {
     expect(wrapper.find('cite').text())
       .toContain('William S Burroughs, Naked Lunch');
     expect(wrapperNoAuthorNoTags.find('cite').text())
@@ -51,30 +51,30 @@ describe('ReminderListItem.vue', () => {
       .toMatchObject({});
   });
 
-  it('Displays tags appropriately', () => {
+  it('displays tags appropriately', () => {
     expect(wrapper.find('footer').text())
-      .toContain(reminders.reminder1.tags.join(', '));
+      .toContain(reminders[0].tags.join(', '));
     expect(wrapperNoAuthorNoTags.find('footer'))
       .toMatchObject({});
   });
 
-  it('Contains an edit button', () => {
+  it('contains an edit button', () => {
     expect(wrapper.find('button.btn-primary').text())
       .toContain('Edit');
   });
 
-  it('Contains a delete button', () => {
+  it('contains a delete button', () => {
     expect(wrapper.find('button.btn-danger').text())
       .toContain('Delete');
   });
 
-  it('onDelete and onEdit run when clicked', () => {
+  it('runs onDelete and onEdit when clicked', () => {
     const deleteMock = jest.fn();
     const editMock = jest.fn();
     const wrapperNewMethods = mount(ReminderListItem, {
       propsData: {
         reminder: {
-          ...reminders.reminder1,
+          ...reminders[0],
         },
       },
       methods: {
