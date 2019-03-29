@@ -3,7 +3,7 @@
     <TheNavBar></TheNavBar>
     <div class="jumbotron">
       <div class="container">
-        <h1 class="display-4">Hello, {{$auth.user.name}}!</h1>
+        <h1 class="display-4">Hello, {{$auth === undefined ? 'New User' : $auth.user.name}}!</h1>
         <hr class="my-4">
         <p class="lead">
         </p>
