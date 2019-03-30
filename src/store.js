@@ -4,6 +4,7 @@ import axios from 'axios';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { getField, updateField } from 'vuex-map-fields';
+import { VueTagsInput, createTags } from '@johmun/vue-tags-input';
 
 Vue.use(Vuex);
 
@@ -37,7 +38,11 @@ const mutations = {
         state.form.author = state.reminders[i].author;
         state.form.source = state.reminders[i].source;
         state.form.tag = state.reminders[i].tag;
-        state.form.tags = state.reminders[i].tags;
+        if (state.reminders[i].tags[0] !== null) {
+          state.form.tags = createTags(state.reminders[i].tags);
+        } else {
+          state.form.tags = createTags([]);
+        }
       }
     }
   },
