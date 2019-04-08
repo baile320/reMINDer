@@ -4,17 +4,23 @@
       <img src="../../public/favicon-32x32.png" width="40" height="40">
     </a>
     <div>
-      <img :src="$auth.user.picture" width="30" height="30">
-      <span class="text-muted font-weight-light px-2">{{$auth.user.name}}</span>
+      <span class="text-muted font-weight-light px-2">{{this.$auth.isAuthenticated() ?  $auth.user.name : ''}}</span>
       <router-link to="/" class="btn btn-outline-secondary btn-sm">Home</router-link>
       <router-link to="/manage" class="btn btn-outline-secondary btn-sm ml-1">Manage</router-link>
-      <router-link
-        to="/logout"
+      <button
+        v-if="!this.$auth.isAuthenticated()"
         class="btn btn-outline-secondary btn-sm ml-1"
-        @click="$auth.logout()"
+        @click.prevent="$auth.login()"
+      >
+        Login
+      </button>
+      <button
+        v-if="this.$auth.isAuthenticated()"
+        class="btn btn-outline-secondary btn-sm ml-1"
+        @click.prevent="$auth.logout()"
       >
         Logout
-      </router-link>
+      </button>
     </div>
   </nav>
 </template>
