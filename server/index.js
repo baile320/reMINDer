@@ -1,4 +1,7 @@
 const schedule = require('node-schedule');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const app = require('./app');
 const db = require('../database/index.js');
