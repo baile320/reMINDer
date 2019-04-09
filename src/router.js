@@ -32,7 +32,7 @@ router.beforeEach((to, from, next) => {
   if (to.path === '/' || to.path === '/callback' || router.app.$auth.isAuthenticated()) {
     return next();
   }
-  router.app.$auth.login({ target: to.path });
+  router.app.$auth.login({ });
 });
 
 export default router;

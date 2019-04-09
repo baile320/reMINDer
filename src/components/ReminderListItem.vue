@@ -24,6 +24,11 @@
         tags: {{reminder.tags.join(', ')}}
       </footer>
     </blockquote>
+    <p class="">
+      Sent Count: {{reminder.sentCount}}
+      <br/>
+      Last Sent: {{formatLastSent(reminder.lastSent)}}
+    </p>
     <button
       type="button"
       class="btn btn-primary float-left"
@@ -42,6 +47,8 @@
 </template>
 
 <script>
+import moment from 'moment';
+
 export default {
   name: 'ReminderListItem',
   props: ['reminder'],
@@ -50,6 +57,9 @@ export default {
     };
   },
   methods: {
+    formatLastSent(date) {
+      return moment(date).fromNow();
+    },
     onEdit() {
       this.$store.dispatch('editReminder', this.reminder._id);
     },
