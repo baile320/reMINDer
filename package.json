@@ -6,6 +6,7 @@
     "serve": "vue-cli-service serve '--port=8080'",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
+    "postinstall": "npm run build",
     "start": "node ./server/index.js",
     "start-dev": "nodemon ./server/index.js",
     "test": "vue-cli-service test:unit"
