@@ -3,8 +3,8 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const url = process.env.URI || 'localhost';
-const apiPort = process.env.API_PORT || '8080';
-const hostPort = process.env.HOST_PORT || '8080';
+const apiPort = process.env.PORT || process.env.API_PORT;
+const hostPort = process.env.PORT || process.env.HOST_PORT;
 const clientId = process.env.CLIENT_ID;
 const authDomain = process.env.AUTH_DOMAIN;
 

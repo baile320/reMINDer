@@ -7,7 +7,7 @@ const app = require('./app');
 const db = require('../database/index.js');
 const sendTodaysQuotes = require('./utils/emailer');
 
-const apiPort = process.env.API_PORT || 8080;
+const apiPort = process.env.PORT || process.env.API_PORT;
 
 app.listen(apiPort, async () => {
   console.log(`reMINDer API listening on port ${apiPort}!`);
