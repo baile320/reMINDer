@@ -6,7 +6,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const url = process.env.URI || 'localhost';
-const apiPort = process.env.API_PORT || '8081';
+const apiPort = process.env.API_PORT || 8080;
 
 exports.checkJwt = jwt({
   secret: jwks.expressJwtSecret({

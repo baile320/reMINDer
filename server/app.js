@@ -17,6 +17,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(history());
 
+app.use(express.static('dist'));
+
 // Apply Logging
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
