@@ -15,7 +15,7 @@ exports.checkJwt = jwt({
     jwksRequestsPerMinute: 5,
     jwksUri: 'https://dev-vxw7uzlp.auth0.com/.well-known/jwks.json',
   }),
-  aud: `http://${url}:${apiPort}/api/`,
+  aud: `${process.env.URI}/api/`,
   issuer: 'https://dev-vxw7uzlp.auth0.com/',
   algorithms: ['RS256'],
 });

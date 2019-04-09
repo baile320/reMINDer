@@ -12,7 +12,7 @@ module.exports.authConfig = {
   domain: authDomain,
   fullDomain: `${authDomain}.auth0.com`,
   clientId,
-  redirectUri: `${url}/callback`,
-  aud: `${url}/api/`,
-  logoutUri: `${url}/logout`,
+  redirectUri: `${process.env.URI}/callback`,
+  aud: `${process.env.URI}/api/`,
+  logoutUri: `${process.env.URI}/logout`,
 };
