@@ -3,11 +3,8 @@
 /* eslint-disable camelcase */
 import auth0 from 'auth0-js';
 import Vue from 'vue';
-import dotenv from 'dotenv';
 
 import { authConfig } from '../auth_config';
-
-dotenv.config();
 
 // exchange the object with your own from the setup step above.
 const webAuth = new auth0.WebAuth({
