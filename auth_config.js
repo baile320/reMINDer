@@ -12,7 +12,7 @@ module.exports.authConfig = {
   domain: authDomain,
   fullDomain: `${authDomain}.auth0.com`,
   clientId,
-  redirectUri: `${process.env.URI}/callback`,
-  aud: `${process.env.URI}/api/`,
-  logoutUri: `${process.env.URI}/logout`,
+  redirectUri: `https://tylerreminderapp.herokuapp.com/callback`,
+  aud: `https://tylerreminderapp.herokuapp.com/api/`,
+  logoutUri: `https://tylerreminderapp.herokuapp.com/logout`,
 };

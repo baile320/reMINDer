@@ -15,7 +15,7 @@ exports.checkJwt = jwt({
     jwksRequestsPerMinute: 5,
     jwksUri: 'https://dev-vxw7uzlp.auth0.com/.well-known/jwks.json',
   }),
-  aud: `${process.env.URI}/api/`,
+  aud: `https://tylerreminderapp.herokuapp.com/api/`,
   issuer: 'https://dev-vxw7uzlp.auth0.com/',
   algorithms: ['RS256'],
 });
