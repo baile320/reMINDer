@@ -9,7 +9,7 @@ import { authConfig } from '../auth_config';
 // exchange the object with your own from the setup step above.
 const webAuth = new auth0.WebAuth({
   domain: authConfig.fullDomain,
-  redirectUri: authConfig.redirectUri,
+  redirectUri: 'https://tylerreminderapp.herokuapp.com',
   clientID: authConfig.clientId,
   audience: authConfig.aud,
   responseType: 'token id_token',
