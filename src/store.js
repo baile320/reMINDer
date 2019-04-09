@@ -5,6 +5,12 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { getField, updateField } from 'vuex-map-fields';
 import { VueTagsInput, createTags } from '@johmun/vue-tags-input';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const url = process.env.URI || 'localhost';
+const apiPort = process.env.API_PORT || '8081';
 
 Vue.use(Vuex);
 
@@ -85,14 +91,14 @@ const actions = {
     // send form to api (if edit, we include ID and patch, else post)
     if (_id !== '') {
       submission._id = _id;
-      axios.patch(`http://127.0.0.1:8081/api/users/${email}/reminders/${_id}`, submission, { headers })
+      axios.patch(`http://${url}:${apiPort}/api/users/${email}/reminders/${_id}`, submission, { headers })
         .then((response) => {
           commit('FETCH_REMINDERS', response.data.reminders);
           commit('CLEAR_FORM');
         })
         .catch(err => console.log(err));
     } else {
-      axios.post(`http://127.0.0.1:8081/api/users/${email}/reminders/`, submission, { headers })
+      axios.post(`http://${url}:${apiPort}/api/users/${email}/reminders/`, submission, { headers })
         .then((response) => {
           commit('FETCH_REMINDERS', response.data.reminders);
           commit('CLEAR_FORM');
@@ -105,14 +111,14 @@ const actions = {
   deleteReminder: ({ commit }, payload) => {
     const { headers, _id } = payload;
     // delete fom mongodb
-    axios.delete(`http://127.0.0.1:8081/api/users/${payload.email}/reminders/${_id}`, { headers })
+    axios.delete(`http://${url}:${apiPort}/api/users/${payload.email}/reminders/${_id}`, { headers })
     // delete from state
       .then(() => commit('DELETE_REMINDER', _id))
       .catch(err => console.log(err));
   },
   fetchReminders: ({ commit }, payload) => {
     const { headers } = payload;
-    axios.get(`http://127.0.0.1:8081/api/users/${payload.email}/reminders`, { headers })
+    axios.get(`http://${url}:${apiPort}/api/users/${payload.email}/reminders`, { headers })
       .then((response) => {
         commit('FETCH_REMINDERS', response.data.reminders);
       })

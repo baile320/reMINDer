@@ -4,10 +4,10 @@ const app = require('./app');
 const db = require('../database/index.js');
 const sendTodaysQuotes = require('./utils/emailer');
 
-const port = process.env.PORT || 8081;
+const apiPort = process.env.API_PORT || 8081;
 
-app.listen(port, async () => {
-  console.log(`reMINDer API listening on port ${port}!`);
+app.listen(apiPort, async () => {
+  console.log(`reMINDer API listening on port ${apiPort}!`);
   db;
 });
 

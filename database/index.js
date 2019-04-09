@@ -22,7 +22,6 @@ if (process.env.NODE_ENV !== 'production') {
   options.pass = dbPassword;
 }
 
-console.log(connString);
 const db = mongoose.connect(connString, options)
   .then(() => console.log('Successfully connected to Mongo'))
   .catch(err => console.log(err));

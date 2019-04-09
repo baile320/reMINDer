@@ -1,10 +1,13 @@
 const jwt = require('express-jwt');
 const jwks = require('jwks-rsa');
 const axios = require('axios');
+const dotenv = require('dotenv');
 
-/**
- * Should the JWT/userInfo stuff be in the controller instead of here?
- */
+dotenv.config();
+
+const url = process.env.URI || 'localhost';
+const apiPort = process.env.API_PORT || '8081';
+
 exports.checkJwt = jwt({
   secret: jwks.expressJwtSecret({
     cache: true,
@@ -12,7 +15,7 @@ exports.checkJwt = jwt({
     jwksRequestsPerMinute: 5,
     jwksUri: 'https://dev-vxw7uzlp.auth0.com/.well-known/jwks.json',
   }),
-  aud: 'http://localhost:8081/api/',
+  aud: `http://${url}:${apiPort}/api/`,
   issuer: 'https://dev-vxw7uzlp.auth0.com/',
   algorithms: ['RS256'],
 });
