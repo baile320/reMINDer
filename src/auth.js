@@ -13,7 +13,7 @@ dotenv.config();
 const webAuth = new auth0.WebAuth({
   domain: authConfig.fullDomain,
   redirectUri: authConfig.redirectUri,
-  clientID: process.env.CLIENT_ID,
+  clientID: authConfig.clientId,
   audience: authConfig.aud,
   responseType: 'token id_token',
   scope: 'openid profile email',
