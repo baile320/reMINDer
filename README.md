@@ -12,32 +12,3 @@ It is currently under constant development.
 ## App In Action
 ![This is a gif of the application in action](https://i.imgur.com/5Lu8n4e.gif)
 ![An example email](https://i.imgur.com/6CMeZHU.png)
-
-## vue-cli boilerplate
-### Project setup
-```
-npm install
-```
-
-#### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-#### Compiles and minifies for production
-```
-npm run build
-```
-
-#### Run your tests
-```
-npm run test
-```
-
-#### Lints and fixes files
-```
-npm run lint
-```
-
-#### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
