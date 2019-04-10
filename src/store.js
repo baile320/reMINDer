@@ -9,8 +9,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const url = process.env.URI || 'localhost';
-const apiPort = process.env.PORT || process.env.API_PORT;
+const url = process.env.URI;
 
 Vue.use(Vuex);
 
