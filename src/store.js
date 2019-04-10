@@ -117,7 +117,7 @@ const actions = {
   },
   fetchReminders: ({ commit }, payload) => {
     const { headers } = payload;
-    axios.get(`${url}/api/users/${payload.email}/reminders`, { headers })
+    axios.get(`https://tylerreminderapp.herokuapp.com/api/users/${payload.email}/reminders`, { headers })
       .then((response) => {
         commit('FETCH_REMINDERS', response.data.reminders);
       })
