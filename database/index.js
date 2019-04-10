@@ -9,8 +9,8 @@ let connString;
 
 if (process.env.NODE_ENV !== 'production') {
   const dbHostName = 'localhost';
-  const dbPort = process.env.DB_PORT || 27017;
-  const dbDatabaseName = process.env.DB_NAME || 'reminder';
+  const dbPort = '27017';
+  const dbDatabaseName = 'reminder';
   connString = `mongodb://${dbHostName}:${dbPort}/${dbDatabaseName}`;
 } else {
   const dbUrl = process.env.DB_URL;
@@ -23,7 +23,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const db = mongoose.connect(connString, options)
-  .then(() => console.log('Successfully connected to Mongo'))
+  .then(() => console.log(`Successfully connected to Mongo on ${connString}`))
   .catch(err => console.log(err));
 
 module.exports.db = db;

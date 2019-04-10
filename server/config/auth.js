@@ -1,12 +1,7 @@
 const jwt = require('express-jwt');
 const jwks = require('jwks-rsa');
 const axios = require('axios');
-const dotenv = require('dotenv');
-
-dotenv.config();
-
-const url = process.env.URI || 'localhost';
-const apiPort = process.env.PORT || process.env.API_PORT;
+require('../../config');
 
 exports.checkJwt = jwt({
   secret: jwks.expressJwtSecret({
@@ -15,7 +10,7 @@ exports.checkJwt = jwt({
     jwksRequestsPerMinute: 5,
     jwksUri: 'https://dev-vxw7uzlp.auth0.com/.well-known/jwks.json',
   }),
-  audience: 'https://tylerreminderapp.herokuapp.com/api',
+  audience: `${process.env.VUE_APP_AUD}/api/`,
   issuer: 'https://dev-vxw7uzlp.auth0.com/',
   algorithms: ['RS256'],
 });

@@ -1,14 +1,12 @@
-const dotenv = require('dotenv');
+require('./config');
 
-dotenv.config();
-
-const authDomain = process.env.AUTH_DOMAIN || 'dev-vxw7uzlp';
-
-module.exports.authConfig = {
-  domain: authDomain,
-  fullDomain: `${authDomain}.auth0.com`,
-  clientId: 'usLDsrjOBiuUsEi1TV2Crh93Xn7kHhXv',
-  redirectUri: `https://tylerreminderapp.herokuapp.com/callback`,
-  aud: `https://tylerreminderapp.herokuapp.com/api`,
-  logoutUri: `https://tylerreminderapp.herokuapp.com/`,
+const authConfig = {
+  domain: process.env.VUE_APP_AUTH_DOMAIN,
+  fullDomain: `${process.env.VUE_APP_AUTH_DOMAIN}.auth0.com`,
+  clientId: `${process.env.VUE_APP_CLIENT_ID}`,
+  redirectUri: `${process.env.VUE_APP_URI}/callback`,
+  aud: `${process.env.VUE_APP_AUD}/api/`,
+  logoutUri: `${process.env.VUE_APP_URI}/`,
 };
+
+module.exports.authConfig = authConfig;
