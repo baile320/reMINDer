@@ -9,8 +9,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const url = process.env.URI;
-
 Vue.use(Vuex);
 
 const state = {
@@ -56,6 +54,7 @@ const mutations = {
     state.reminders.push(...reminders);
   },
   ADD_REMINDER(state, newReminder) {
+    console.log(process.env.URI);
     state.reminders.push(newReminder);
   },
   CLEAR_FORM(state) {
@@ -90,14 +89,14 @@ const actions = {
     // send form to api (if edit, we include ID and patch, else post)
     if (_id !== '') {
       submission._id = _id;
-      axios.patch(`${url}/api/users/${email}/reminders/${_id}`, submission, { headers })
+      axios.patch(`https://tylerreminderapp.herokuapp.com/api/users/${email}/reminders/${_id}`, submission, { headers })
         .then((response) => {
           commit('FETCH_REMINDERS', response.data.reminders);
           commit('CLEAR_FORM');
         })
         .catch(err => console.log(err));
     } else {
-      axios.post(`${url}/api/users/${email}/reminders/`, submission, { headers })
+      axios.post(`https://tylerreminderapp.herokuapp.com/api/users/${email}/reminders/`, submission, { headers })
         .then((response) => {
           commit('FETCH_REMINDERS', response.data.reminders);
           commit('CLEAR_FORM');
@@ -110,7 +109,7 @@ const actions = {
   deleteReminder: ({ commit }, payload) => {
     const { headers, _id } = payload;
     // delete fom mongodb
-    axios.delete(`${url}/api/users/${payload.email}/reminders/${_id}`, { headers })
+    axios.delete(`https://tylerreminderapp.herokuapp.com/api/users/${payload.email}/reminders/${_id}`, { headers })
     // delete from state
       .then(() => commit('DELETE_REMINDER', _id))
       .catch(err => console.log(err));
