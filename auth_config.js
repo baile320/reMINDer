@@ -14,5 +14,5 @@ module.exports.authConfig = {
   clientId,
   redirectUri: `https://tylerreminderapp.herokuapp.com/callback`,
   aud: `https://tylerreminderapp.herokuapp.com/api/`,
-  logoutUri: `https://tylerreminderapp.herokuapp.com/logout`,
+  logoutUri: `https://tylerreminderapp.herokuapp.com/`,
 };
