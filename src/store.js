@@ -54,7 +54,6 @@ const mutations = {
     state.reminders.push(...reminders);
   },
   ADD_REMINDER(state, newReminder) {
-    console.log(process.env.URI);
     state.reminders.push(newReminder);
   },
   CLEAR_FORM(state) {
@@ -96,6 +95,7 @@ const actions = {
         })
         .catch(err => console.log(err));
     } else {
+      console.log(process.env);
       axios.post(`https://tylerreminderapp.herokuapp.com/api/users/${email}/reminders/`, submission, { headers })
         .then((response) => {
           commit('FETCH_REMINDERS', response.data.reminders);
