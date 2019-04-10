@@ -91,14 +91,14 @@ const actions = {
     // send form to api (if edit, we include ID and patch, else post)
     if (_id !== '') {
       submission._id = _id;
-      axios.patch(`http://${url}:${apiPort}/api/users/${email}/reminders/${_id}`, submission, { headers })
+      axios.patch(`${url}/api/users/${email}/reminders/${_id}`, submission, { headers })
         .then((response) => {
           commit('FETCH_REMINDERS', response.data.reminders);
           commit('CLEAR_FORM');
         })
         .catch(err => console.log(err));
     } else {
-      axios.post(`http://${url}:${apiPort}/api/users/${email}/reminders/`, submission, { headers })
+      axios.post(`${url}/api/users/${email}/reminders/`, submission, { headers })
         .then((response) => {
           commit('FETCH_REMINDERS', response.data.reminders);
           commit('CLEAR_FORM');
@@ -111,14 +111,14 @@ const actions = {
   deleteReminder: ({ commit }, payload) => {
     const { headers, _id } = payload;
     // delete fom mongodb
-    axios.delete(`http://${url}:${apiPort}/api/users/${payload.email}/reminders/${_id}`, { headers })
+    axios.delete(`${url}/api/users/${payload.email}/reminders/${_id}`, { headers })
     // delete from state
       .then(() => commit('DELETE_REMINDER', _id))
       .catch(err => console.log(err));
   },
   fetchReminders: ({ commit }, payload) => {
     const { headers } = payload;
-    axios.get(`http://${url}:${apiPort}/api/users/${payload.email}/reminders`, { headers })
+    axios.get(`${url}/api/users/${payload.email}/reminders`, { headers })
       .then((response) => {
         commit('FETCH_REMINDERS', response.data.reminders);
       })
