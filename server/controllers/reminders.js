@@ -88,3 +88,12 @@ exports.updateForEmailer = async (email, reminderId, updates) => {
     return e;
   }
 };
+
+exports.getUsersForEmailer = async () => {
+  try {
+    const result = await User.find();
+    return result;
+  } catch (e) {
+    return e;
+  }
+};

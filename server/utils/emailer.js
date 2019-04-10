@@ -2,7 +2,7 @@ const dotenv = require('dotenv');
 const { createTransport } = require('nodemailer');
 const moment = require('moment');
 
-const { getRemindersForEmailer, updateForEmailer } = require('../controllers/reminders.js');
+const { getRemindersForEmailer, updateForEmailer, getUsersForEmailer } = require('../controllers/reminders.js');
 
 dotenv.config();
 
@@ -20,29 +20,9 @@ dotenv.config();
       page to the app)
 */
 
-const transporter = createTransport({
-  auth: {
-    pass: process.env.reminderPassword,
-    user: process.env.reminderEmail,
-  },
-  service: process.env.service,
-});
-
-// build out initial mail options
-const today = new Date();
-const formattedDate = `${today.getMonth()}/${today.getDate()}/${today.getFullYear()}`;
-
-const mailOptions = {
-  from: `"reMINDer" <${process.env.reminderEmail}>`,
-  subject: `Your Reminder For ${formattedDate}`,
-  to: `${process.env.username} <${process.env.userEmail}>`,
-};
-
-function fetchTodaysQuotes() {
-  const THREE_DAYS_AGO = moment(today).add(-3, 'days').toISOString();
+function fetchTodaysQuotes(email, timeframe) {
   // fetch quotes
-  return getRemindersForEmailer(process.env.userEmail, THREE_DAYS_AGO)
-
+  return getRemindersForEmailer(email, timeframe)
     .then((allQuotes) => {
       // create quote array to return
       const quotes = [];
@@ -63,30 +43,53 @@ function fetchTodaysQuotes() {
 }
 
 // Send out the quotes
-function sendTodaysQuotes() {
-  fetchTodaysQuotes()
-    .then((quotes) => {
-      if (quotes.length > 0) {
-        const html = quotes.map(quote => `<p>${quote.body}<p><p>-- ${quote.author}, ${quote.source}</p>`);
-        transporter.sendMail({
-          ...mailOptions,
-          html: html.join('\n'),
+async function sendTodaysQuotes() {
+  const transporter = createTransport({
+    auth: {
+      pass: process.env.reminderPassword,
+      user: process.env.reminderEmail,
+    },
+    service: process.env.service,
+  });
+  // build out initial mail options
+  const today = new Date();
+  const formattedDate = `${today.getMonth()}/${today.getDate()}/${today.getFullYear()}`;
+  const mailOptions = {
+    from: `"reMINDer" <${process.env.reminderEmail}>`,
+    subject: `Your Reminder For ${formattedDate}`,
+  };
+  const THREE_DAYS_AGO = moment(today).add(-3, 'days').toISOString();
+
+  const users = await getUsersForEmailer();
+  users.forEach((user) => {
+    fetchTodaysQuotes(user.email, THREE_DAYS_AGO)
+      .then((quotes) => {
+        if (quotes.length === 0) { console.log('Nothing to send'); }
+        // format the quotes and send the mail
+        if (quotes.length > 0) {
+          const html = quotes.map(quote => `<p>${quote.body}<p><p>-- ${quote.author}, ${quote.source}</p>`);
+          transporter.sendMail({
+            ...mailOptions,
+            to: `<${user.email}>`,
+            html: html.join('\n'),
+          });
+          console.log('Daily email sent');
+          return quotes;
+        }
+        return [];
+      })
+      // update the quotes that were sent
+      .then((quotes) => {
+        quotes.map((message) => {
+          const sentCount = message.sentCount + 1;
+          const lastSent = new Date();
+          return updateForEmailer(user.email, message._id, { sentCount, lastSent })
+            .then(res => res)
+            .catch(err => console.log(err));
         });
-        return quotes;
-      }
-      return [];
-    })
-    .then((quotes) => {
-      quotes.map((message) => {
-        const sentCount = message.sentCount + 1;
-        const lastSent = new Date();
-        return updateForEmailer(process.env.userEmail, message._id, { sentCount, lastSent })
-          .then(res => console.log(res))
-          .catch(err => console.log(err));
-      });
-    })
-    .then(() => console.log('Daily email sent'))
-    .catch(err => console.log(err));
+      })
+      .catch(err => console.log(err));
+  });
 }
 
 module.exports = sendTodaysQuotes;
