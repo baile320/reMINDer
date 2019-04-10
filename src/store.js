@@ -5,9 +5,6 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { getField, updateField } from 'vuex-map-fields';
 import { VueTagsInput, createTags } from '@johmun/vue-tags-input';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 Vue.use(Vuex);
 
@@ -95,7 +92,6 @@ const actions = {
         })
         .catch(err => console.log(err));
     } else {
-      console.log(process.env);
       axios.post(`https://tylerreminderapp.herokuapp.com/api/users/${email}/reminders/`, submission, { headers })
         .then((response) => {
           commit('FETCH_REMINDERS', response.data.reminders);
