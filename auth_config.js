@@ -5,7 +5,7 @@ dotenv.config();
 const url = process.env.URI || 'localhost';
 const apiPort = process.env.PORT || process.env.API_PORT;
 const hostPort = process.env.PORT || process.env.HOST_PORT;
-const clientId = process.env.CLIENT_ID || 'usLDsrjOBiuUsEi1TV2Crh93Xn7kHhXv';
+const clientId = process.env.CLIENT_ID || process.env.CLIENT_ID;
 const authDomain = process.env.AUTH_DOMAIN || 'dev-vxw7uzlp';
 
 module.exports.authConfig = {
