@@ -13,6 +13,6 @@ module.exports.authConfig = {
   fullDomain: `${authDomain}.auth0.com`,
   clientId,
   redirectUri: `https://tylerreminderapp.herokuapp.com/callback`,
-  aud: `https://tylerreminderapp.herokuapp.com/`,
+  aud: `https://tylerreminderapp.herokuapp.com/api`,
   logoutUri: `https://tylerreminderapp.herokuapp.com/`,
 };

@@ -11,7 +11,7 @@ const webAuth = new auth0.WebAuth({
   domain: 'dev-vxw7uzlp.auth0.com',
   redirectUri: 'https://tylerreminderapp.herokuapp.com/callback',
   clientID: 'usLDsrjOBiuUsEi1TV2Crh93Xn7kHhXv',
-  audience: 'https://tylerreminderapp.herokuapp.com/',
+  audience: 'https://tylerreminderapp.herokuapp.com/api',
   responseType: 'token id_token',
   scope: 'openid profile email',
 });
