@@ -1,5 +1,3 @@
-**See reMINDer live here: https://tylerreminderapp.herokuapp.com/. Please note using the app requires you to log in.**
-
 # reMINDer
 reMINDer is a non-intrusive daily reminder app that leverages spaced repetition learning techniques. You enter a bunch of quotes, and you will get a periodic e-mail (the non-intrusive part) of randomly selected quotes. Quotes that are sent recently or have been sent more times overall will be sent less frequently in the future (the spaced repetition part).
 
